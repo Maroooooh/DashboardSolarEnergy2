@@ -95,7 +95,7 @@ export default function AllLessons() {
                       <td className="p-2 whitespace-nowrap flex">
                         <Link
                           className="me-3 font-medium text-violet-500 hover:text-violet-600 dark:hover:text-violet-400"
-                          to={`/edit_lesson/${lesons._id}`}
+                          to={`/edit_product/${lesons._id}`}
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"

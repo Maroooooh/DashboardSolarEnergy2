@@ -44,7 +44,7 @@ function App() {
         <Route exact path="/edit_course/:courseId" element={<Guard><AddCourse /></Guard>} />
         <Route exact path="/all_product" element={<Guard><AllLessons /></Guard>} />
         <Route exact path="/add_product" element={<Guard><AddLesson /></Guard>} />
-        <Route exact path="/edit_lesson/:lessonId" element={<Guard><AddLesson /></Guard>} />
+        <Route exact path="/edit_product/:productId" element={<Guard><AddLesson /></Guard>} />
     </Route>
         <Route exact path="*" element={<NotFound />} />
       </Routes>

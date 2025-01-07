@@ -3,7 +3,7 @@ import store from "./../store/store";
 import { logout } from "../store/slices/auth";
 
 const axiosInstance = axios.create({
-    baseURL: 'http://localhost:3333/',
+    baseURL: 'https://rendermarah.onrender.com',
 });
 const isTokenExpired = (token) => {
     if (!token) {

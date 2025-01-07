@@ -16,13 +16,13 @@ export default function AddProduct() {
     const fetchProduct = async () => {
       if (productId) {
         try {
-          const res = await axiosInstance.get(`products/${productId}`);
-          setProduct(res.data.product);
+          const res = await axiosInstance.get(`products/product/${productId}`);
+          setProduct(res.data.data);
         } catch (error) {
           toast.error(error.response?.data?.message || 'Product not found');
         }
       } else {
-        setProduct({});
+        setProduct({}); // Initialize for a new product
       }
     };
 
@@ -53,7 +53,7 @@ export default function AddProduct() {
     description: yup.string(),
     inStock: yup.boolean().required('Stock status is required'),
     categoryId: yup.string().required('Category is required'),
-    img: yup.mixed().required('Image is required'),
+    img: yup.mixed(), // Removed `.required()` to make it optional
   });
 
   const handleProductSubmit = async (values, { setSubmitting }) => {
@@ -66,12 +66,14 @@ export default function AddProduct() {
       formData.append('description', values.description);
       formData.append('inStock', values.inStock);
       formData.append('categoryId', values.categoryId);
-      formData.append('img', values.img);
 
-      console.log(formData);
-      
+      // Append the image file only if it's provided
+      if (values.img) {
+        formData.append('img', values.img);
+      }
+
       const res = productId
-        ? await axiosInstance.put(`products/products/${productId}`, formData)
+        ? await axiosInstance.put(`products/product/${productId}`, formData)
         : await axiosInstance.post('products/product', formData);
 
       toast.success(productId ? 'Product updated successfully!' : 'Product added successfully!');
@@ -98,8 +100,8 @@ export default function AddProduct() {
           price: product?.price || '',
           description: product?.description || '',
           inStock: product?.inStock || false,
-          categoryId: product?.categoryId || '',
-          img: null, // For new uploads
+          categoryId: product?.categoryId?.name || '',
+          img: product?.img , // For new uploads
         }}
         validationSchema={validationSchema}
         onSubmit={handleProductSubmit}
@@ -188,8 +190,7 @@ export default function AddProduct() {
                 className="px-4 py-2 bg-blue-600 text-white rounded-md"
                 disabled={isSubmitting}
               >
-               حفظ
-               
+                حفظ
               </button>
               <button
                 type="button"
